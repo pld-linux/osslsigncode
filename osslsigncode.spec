@@ -1,21 +1,22 @@
 Summary:	osslsigncode - simple Microsoft signtool.exe replacement
 Summary(pl.UTF-8):	osslsigncode - prosty zastępnik Microsoftowego narzędzia signtool.exe
 Name:		osslsigncode
-Version:	1.7.1
+Version:	2.0
 Release:	1
-License:	GPL v3+
+License:	GPL v3+ with OpenSSL exception
 Group:		Applications/Crypto
-Source0:	http://downloads.sourceforge.net/osslsigncode/%{name}-%{version}.tar.gz
-# Source0-md5:	ac5655b9281b692423ecb2e9185f09d7
-URL:		http://osslsigncode.sourceforge.net/
+#Source0Download: https://github.com/mtrojnar/osslsigncode/releases
+Source0:	https://github.com/mtrojnar/osslsigncode/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	4ff4c4e9678af04fb7ba1b2baed048d7
+URL:		https://github.com/mtrojnar/osslsigncode
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
-BuildRequires:	curl-devel
-BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel
-BuildRequires:	libtool
+BuildRequires:	curl-devel >= 7.12.0
 BuildRequires:	libgsf-devel
-BuildRequires:	openssl-devel
+BuildRequires:	openssl-devel >= 1.1.0
+BuildRequires:	pkgconfig
+Requires:	curl-libs >= 7.12.0
+Requires:	openssl >= 1.1.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -35,10 +36,7 @@ posiadających te biblioteki.
 %prep
 %setup -q
 
-%{__rm} aclocal.m4
-
 %build
-%{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
@@ -58,5 +56,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog README TODO
+%doc CHANGELOG.md LICENSE.txt README.md README.unauthblob.md TODO.md
 %attr(755,root,root) %{_bindir}/osslsigncode
