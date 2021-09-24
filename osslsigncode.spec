@@ -2,7 +2,7 @@ Summary:	osslsigncode - simple Microsoft signtool.exe replacement
 Summary(pl.UTF-8):	osslsigncode - prosty zastępnik Microsoftowego narzędzia signtool.exe
 Name:		osslsigncode
 Version:	2.0
-Release:	1
+Release:	2
 License:	GPL v3+ with OpenSSL exception
 Group:		Applications/Crypto
 #Source0Download: https://github.com/mtrojnar/osslsigncode/releases
