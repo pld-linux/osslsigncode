@@ -1,22 +1,20 @@
 Summary:	osslsigncode - simple Microsoft signtool.exe replacement
 Summary(pl.UTF-8):	osslsigncode - prosty zastępnik Microsoftowego narzędzia signtool.exe
 Name:		osslsigncode
-Version:	2.0
-Release:	2
+Version:	2.9
+Release:	1
 License:	GPL v3+ with OpenSSL exception
 Group:		Applications/Crypto
 #Source0Download: https://github.com/mtrojnar/osslsigncode/releases
 Source0:	https://github.com/mtrojnar/osslsigncode/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	4ff4c4e9678af04fb7ba1b2baed048d7
+# Source0-md5:	c30101ceaf2331243aa27a95bf96c742
 URL:		https://github.com/mtrojnar/osslsigncode
-BuildRequires:	autoconf >= 2.61
-BuildRequires:	automake
-BuildRequires:	curl-devel >= 7.12.0
-BuildRequires:	libgsf-devel
-BuildRequires:	openssl-devel >= 1.1.0
+BuildRequires:	cmake >= 3.17
+BuildRequires:	openssl-devel >= 3.0.0
 BuildRequires:	pkgconfig
-Requires:	curl-libs >= 7.12.0
-Requires:	openssl >= 1.1.0
+BuildRequires:	rpmbuild(macros) >= 1.673
+BuildRequires:	zlib-devel
+Requires:	openssl >= 3.0.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -37,18 +35,14 @@ posiadających te biblioteki.
 %setup -q
 
 %build
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure
+%cmake -B build
 
-%{__make}
+%{__make} -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
@@ -56,5 +50,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGELOG.md LICENSE.txt README.md README.unauthblob.md TODO.md
+%doc LICENSE.txt NEWS.md README.md TODO.md
 %attr(755,root,root) %{_bindir}/osslsigncode
+%{bash_compdir}/osslsigncode.bash
